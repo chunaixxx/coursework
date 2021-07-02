@@ -1,6 +1,9 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
+const signinLogger = require('../loggers/signinLogger');
+const signupLogger = require('../loggers/signupLogger');
+
 const JWT_SECRET = process.env.JWT_SECRET;
 
 module.exports = {
@@ -14,6 +17,9 @@ module.exports = {
 			if (candidate?.password === password) {
 				// Генерация JWT-токена
 				const token = jwt.sign({ username, password }, JWT_SECRET);
+
+				// Логирование входа
+				signinLogger(candidate);
 
 				// Установка токена и отправка ответа
 				res.cookie('token', token).json({ msg: 'Вы успешно вошли' });
@@ -43,6 +49,9 @@ module.exports = {
 
 			// Сохранение пользователя в базу данных
 			await user.save();
+
+			// Логирование регистрации пользователя
+			signupLogger(user);
 
 			// Генерация JWT-токена
 			const token = jwt.sign({ username, password }, JWT_SECRET);
