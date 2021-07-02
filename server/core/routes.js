@@ -3,25 +3,28 @@ const todoController = require('../controllers/todoController');
 const categoryController = require('../controllers/categoryController');
 const reviewController = require('../controllers/reviewController');
 
+// Промежуточный обработчик, проверяющий авторизацию пользователя
+const authenticate = require('../middleware/authenticate');
+
 const createRoutes = app => {
 	// AUTH
 	app.post('/api/signin', authController.signin);
 	app.post('/api/signup', authController.signup);
 	
 	// TOOD
-	app.post('/api/todo', todoController.create);
-	app.get('/api/todo', todoController.read);
-	app.put('/api/todo', todoController.update);
-	app.delete('/api/todo', todoController.delete);
+	app.post('/api/todo', authenticate, todoController.create);
+	app.get('/api/todo', authenticate, todoController.read);
+	app.put('/api/todo', authenticate, todoController.update);
+	app.delete('/api/todo', authenticate, todoController.delete);
 
 	// CATEGORY
-	app.post('/api/category', categoryController.create);
-	app.get('/api/category', categoryController.read);
-	app.put('/api/category', categoryController.update);
-	app.delete('/api/category', categoryController.delete);
+	app.post('/api/category', authenticate, categoryController.create);
+	app.get('/api/category', authenticate, categoryController.read);
+	app.put('/api/category', authenticate, categoryController.update);
+	app.delete('/api/category', authenticate, categoryController.delete);
 
 	// REVIEW
-	app.post('/api/review', reviewController.create);
+	app.post('/api/review', authenticate, reviewController.create);
 	app.get('/api/review', reviewController.read);
 
 	// 404
