@@ -22,11 +22,12 @@ module.exports = {
 				signinLogger(candidate);
 
 				// Установка токена и отправка ответа
-				res.cookie('token', token).json({ msg: 'Вы успешно вошли' });
+				res.json({ token });
 			} else {
-				res.json({ msg: 'Неправильный логин или пароль' });
+				res.status(400).json({ msg: 'Неправильный логин или пароль' });
 			}
 		} catch (e) {
+			console.log(e);
 			res.status(500).json({ msg: 'Произошла ошибка при авторизации' });
 		}
 	},
@@ -34,6 +35,8 @@ module.exports = {
 	async signup(req, res) {
 		try {
 			const { username, password, repeatPassword } = req.body;
+
+			console.log(req.body)
 
 			// Если пользователь уже существует, то вернуть ответ
 			const userExists = await User.findOne({ username });
@@ -56,7 +59,7 @@ module.exports = {
 			// Генерация JWT-токена
 			const token = jwt.sign({ username, password }, JWT_SECRET);
 
-			res.cookie('token', token).json({ msg: 'Вы успешно зарегистрировались' });
+			res.json({ token });
 		} catch (e) {
 			res.status(500).json({ msg: 'Произошла ошибка при регистрации' });
 		}

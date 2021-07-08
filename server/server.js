@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require('cors')
 
 const mongoose = require('mongoose');
 mongoose.set('useNewUrlParser', true);
@@ -14,9 +15,10 @@ const PORT = process.env.PORT || 3000;
 const MONGODB_URL = process.env.MONGODB_URL;
 
 // Промежуточные обработчики
-app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
+app.use(cors())
 
 // Подключение роутов
 const createRoutes = require('./core/routes')(app)
