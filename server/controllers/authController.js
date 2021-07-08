@@ -22,7 +22,10 @@ module.exports = {
 				signinLogger(candidate);
 
 				// Установка токена и отправка ответа
-				res.json({ token });
+				res.json({ 
+					token,
+					username
+				});
 			} else {
 				res.status(400).json({ msg: 'Неправильный логин или пароль' });
 			}
@@ -59,7 +62,10 @@ module.exports = {
 			// Генерация JWT-токена
 			const token = jwt.sign({ username, password }, JWT_SECRET);
 
-			res.json({ token });
+			res.json({ 
+				token,
+				username
+			});
 		} catch (e) {
 			res.status(500).json({ msg: 'Произошла ошибка при регистрации' });
 		}
