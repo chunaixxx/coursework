@@ -6,7 +6,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 // Промежуточный обработчик, проверяющий авторизацию пользователя
 const authenticate = async (req, res, next) => {
 	try {
-		const token = req.cookies.token;
+		const token = req.headers.authorization;
 
 		const decoded = jwt.verify(token, JWT_SECRET);
 

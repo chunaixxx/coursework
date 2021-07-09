@@ -5,6 +5,8 @@ module.exports = {
 			const { desc, grade } = req.body;
 			const user = res.locals.user;
 	
+			console.log(req.body);
+
 			// Создание нового отзыва
 			const review = new Review({
 				author: user.username,
