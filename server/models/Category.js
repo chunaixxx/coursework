@@ -9,7 +9,6 @@ const CategorySchema = new Schema({
 
 	colorHex: {
 		type: String,
-		required: true,
 	},
 
 	user_id: {

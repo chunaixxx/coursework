@@ -28,7 +28,7 @@ const createRoutes = app => {
 	app.get('/api/review', reviewController.read);
 
 	// 404
-	app.use((req, res) =>
+	app.use('/api', (req, res) =>
 		res.status(404).json({ msg: 'API по данному адресу не найдено'})
 	);	
 }
